@@ -1,5 +1,6 @@
 #include <cstddef>
 #include <iostream>
+#include <ranges>
 #include <unordered_map>
 #include <vector>
 
@@ -34,21 +35,23 @@ std::vector<int> topKFrequent(std::vector<int> &nums, int k) {
     buckets[static_cast<std::size_t>(e.second)].push_back(e.first);
   }
 
-  for (int i{static_cast<int>(buckets.size()) - 1}; i > 0; --i) {
-    for (int e : buckets[static_cast<std::size_t>(i)]) {
-      answer.push_back(e);
-      if (answer.size() == static_cast<std::size_t>(k)) {
+  // for (int i{static_cast<int>(buckets.size()) - 1}; i > 0; --i) {
+  //   for (int e : buckets[static_cast<std::size_t>(i)]) {
+  //     answer.push_back(e);
+  //     if (answer.size() == static_cast<std::size_t>(k)) {
+  //       return answer;
+  //     }
+  //   }
+  // }
+
+  for (const auto &element : std::views::reverse(buckets)) {
+    for (const auto &inner : element) {
+      answer.push_back(inner);
+      if (static_cast<int>(answer.size()) == k) {
         return answer;
       }
     }
   }
-
-  // for (const auto &e : buckets | std::ranges::views::reverse) {
-  //   if (static_cast<int>(answer.size()) == k) {
-  //     return answer;
-  //   }
-  //   answer.push_back(e);
-  // }
 
   return answer;
 }
