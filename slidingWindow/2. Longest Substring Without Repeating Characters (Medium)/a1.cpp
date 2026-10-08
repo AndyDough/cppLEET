@@ -1,23 +1,21 @@
-#include <algorithm>
 #include <iostream>
 #include <string>
 #include <unordered_set>
 
-// s = "au" output was 2
+// s = "pwwkew" output was 2
 int lengthOfLongestSubstring(std::string s) {
-  int l{}, r{}, longestS{};
+  int l{}, longestS{};
 
   // record seen characters
   std::unordered_set<char> seen{};
 
-  while (r < s.size() - 1) {
-    if (seen.contains(s[r])) {
+  for (int r{}; r < s.size(); ++r) {
+    while (seen.contains(s[r])) {
       seen.erase(s[l]);
       ++l;
     }
     seen.insert(s[r]);
     longestS = std::max(longestS, r - l + 1);
-    ++r;
   }
 
   return longestS;
