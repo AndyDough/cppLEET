@@ -1,2 +1,5 @@
 CompileFlags:
-  Add: [-std=c++23]
+  Add: 
+    - -std=c++23
+    # - -isysroot
+    # - /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
